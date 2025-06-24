@@ -25,7 +25,7 @@ http://localhost:3000/api
 
 ```json
 {
-  "communityAffiliation": ["VS Code Meetup", "GitHub Dockyard", "どちらでもない"],
+  "communityAffiliation": ["VS Code Meetup", "GitHub Dockyard"],
   "jobRole": ["フロントエンドエンジニア", "バックエンドエンジニア", "フルスタックエンジニア", "DevOpsエンジニア", "データエンジニア", "モバイルエンジニア", "その他"],
   "jobRoleOther": "string",
   "eventRating": 1 | 2 | 3 | 4 | 5,
@@ -35,7 +35,7 @@ http://localhost:3000/api
 
 **フィールド説明**
 
-- `communityAffiliation`: 複数選択可能な配列形式。参加者が所属しているコミュニティを全て選択
+- `communityAffiliation`: 複数選択可能な配列形式。参加者が所属しているコミュニティを全て選択。どちらでもない場合は空配列 `[]` を指定
 - `jobRole`: 複数選択可能な配列形式。参加者の職種を全て選択（複数の職種を兼務している場合を考慮）
 - `jobRoleOther`: `jobRole`に「その他」が含まれている場合に具体的な職種を入力（最大100文字）
 - `eventRating`: 1-5の整数（1=非常に不満、5=非常に満足）
@@ -116,11 +116,7 @@ http://localhost:3000/api
 ```typescript
 interface Survey {
   id: string;
-  communityAffiliation: (
-    | "VS Code Meetup"
-    | "GitHub Dockyard"
-    | "どちらでもない"
-  )[];
+  communityAffiliation: ("VS Code Meetup" | "GitHub Dockyard")[];
   jobRole: (
     | "フロントエンドエンジニア"
     | "バックエンドエンジニア"
@@ -142,7 +138,7 @@ interface Survey {
 
 ### 必須フィールド
 
-- `communityAffiliation`: 必須（配列形式、1つ以上選択）
+- `communityAffiliation`: 必須（配列形式。どちらのコミュニティにも所属していない場合は空配列 `[]` を指定）
 - `jobRole`: 必須（配列形式、1つ以上選択）
 - `eventRating`: 必須（1-5の整数）
 
