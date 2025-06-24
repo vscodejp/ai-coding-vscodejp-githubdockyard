@@ -1,4 +1,6 @@
-# AI Codingを極める会 - VS Code Meetup × GitHub dockyard
+# AI Codingを極める会 - VS Code Meetup × GitHub dockyard - トライアルリポジトリ
+
+イベントページ: https://vscode.connpass.com/event/358179/
 
 ## プロジェクト概要
 
