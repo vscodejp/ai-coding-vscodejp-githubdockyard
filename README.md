@@ -4,7 +4,7 @@
 
 ## プロジェクト概要
 
-VS Code MeetupとGitHub Dockyardの合同イベント「AI Codingを極める会」の事後アンケートシステムです。
+VS Code MeetupとGitHub dockyardの合同イベント「AI Codingを極める会」の事後アンケートシステムです。
 GitHub Copilot Agentを活用して、バックエンドとフロントエンドのチームに分かれて開発します。
 
 ## API仕様書
@@ -27,7 +27,7 @@ http://localhost:3000/api
 
 ```json
 {
-  "communityAffiliation": ["VS Code Meetup", "GitHub Dockyard"],
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
   "jobRole": ["フロントエンドエンジニア", "バックエンドエンジニア", "フルスタックエンジニア", "DevOpsエンジニア", "データエンジニア", "モバイルエンジニア", "その他"],
   "jobRoleOther": "string",
   "eventRating": 1 | 2 | 3 | 4 | 5,
@@ -78,7 +78,7 @@ http://localhost:3000/api
     "totalResponses": 50,
     "communityAffiliation": {
       "VS Code Meetup": 20,
-      "GitHub Dockyard": 15,
+      "GitHub dockyard": 15,
       "どちらでもない": 5
     },
     "jobRole": {
@@ -118,7 +118,7 @@ http://localhost:3000/api
 ```typescript
 interface Survey {
   id: string;
-  communityAffiliation: ("VS Code Meetup" | "GitHub Dockyard")[];
+  communityAffiliation: ("VS Code Meetup" | "GitHub dockyard")[];
   jobRole: (
     | "フロントエンドエンジニア"
     | "バックエンドエンジニア"
