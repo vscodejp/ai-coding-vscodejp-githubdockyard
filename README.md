@@ -31,7 +31,7 @@ http://localhost:3000/api
   "jobRole": ["フロントエンドエンジニア", "バックエンドエンジニア", "フルスタックエンジニア", "DevOpsエンジニア", "データエンジニア", "モバイルエンジニア", "その他"],
   "jobRoleOther": "string",
   "eventRating": 1 | 2 | 3 | 4 | 5,
-  "childcareServiceFeedback": "string"
+  "feedback": "string"
 }
 ```
 
@@ -41,7 +41,7 @@ http://localhost:3000/api
 - `jobRole`: 複数選択可能な配列形式。参加者の職種を全て選択（複数の職種を兼務している場合を考慮）
 - `jobRoleOther`: `jobRole`に「その他」が含まれている場合に具体的な職種を入力（最大100文字）
 - `eventRating`: 1-5の整数（1=非常に不満、5=非常に満足）
-- `childcareServiceFeedback`: 任意のフィードバック（最大1000文字）
+- `feedback`: 任意のフィードバック（最大1000文字）
 
 **レスポンス**
 
@@ -100,7 +100,7 @@ http://localhost:3000/api
         "5": 19
       }
     },
-    "childcareServiceFeedback": [
+    "feedback": [
       {
         "id": "string",
         "feedback": "string",
@@ -130,7 +130,7 @@ interface Survey {
   )[];
   jobRoleOther?: string;
   eventRating: 1 | 2 | 3 | 4 | 5;
-  childcareServiceFeedback: string;
+  feedback: string;
   createdAt: Date;
   updatedAt: Date;
 }
@@ -147,7 +147,7 @@ interface Survey {
 ### オプショナルフィールド
 
 - `jobRoleOther`: 任意（`jobRole`に「その他」が含まれている場合は必須、最大100文字）
-- `childcareServiceFeedback`: 任意（最大1000文字）
+- `feedback`: 任意（最大1000文字）
 
 ## HTTPステータスコード
 
@@ -156,3 +156,10 @@ interface Survey {
 - `400 Bad Request`: リクエストが不正
 - `422 Unprocessable Entity`: バリデーションエラー
 - `500 Internal Server Error`: サーバーエラー
+
+## 開発環境
+
+- **フロントエンド**: React 
+- **バックエンド**: .NET 9 Azure Functions
+- **データベース**: Azure Cosmos DB (NoSQL)
+
