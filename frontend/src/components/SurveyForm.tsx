@@ -1,4 +1,3 @@
-import React from "react";
 import { useForm, Controller } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { z } from "zod";
@@ -14,11 +13,12 @@ import {
   Radio,
   RadioGroup,
 } from "@mui/material";
-import type { Survey } from "../types/survey";
+import type { SubmitHandler } from "react-hook-form";
 
-// Zodスキーマ
-
-const communityAffiliationOptions = ["VS Code Meetup", "GitHub dockyard"];
+const communityAffiliationOptions = [
+  "VS Code Meetup",
+  "GitHub dockyard",
+] as const;
 const jobRoleOptions = [
   "フロントエンドエンジニア",
   "バックエンドエンジニア",
@@ -27,13 +27,10 @@ const jobRoleOptions = [
   "データエンジニア",
   "モバイルエンジニア",
   "その他",
-];
+] as const;
 
 const schema = z.object({
-  communityAffiliation: z
-    .array(z.enum(["VS Code Meetup", "GitHub dockyard"]))
-    .optional()
-    .default([]),
+  communityAffiliation: z.array(z.enum(["VS Code Meetup", "GitHub dockyard"])),
   jobRole: z
     .array(
       z.enum([
@@ -60,10 +57,12 @@ const schema = z.object({
 
 type FormValues = z.infer<typeof schema>;
 
-export const SurveyForm: React.FC<{
-  onSubmit: (data: Survey) => void;
+type SurveyFormProps = {
+  onSubmit: SubmitHandler<FormValues>;
   loading?: boolean;
-}> = ({ onSubmit, loading }) => {
+};
+
+export function SurveyForm({ onSubmit, loading }: SurveyFormProps) {
   const {
     control,
     handleSubmit,
@@ -101,7 +100,7 @@ export const SurveyForm: React.FC<{
                         field.onChange([...(field.value || []), c]);
                       else
                         field.onChange(
-                          (field.value || []).filter((v: string) => v !== c)
+                          (field.value || []).filter((v) => v !== c)
                         );
                     }}
                   />
@@ -134,9 +133,7 @@ export const SurveyForm: React.FC<{
                       if (e.target.checked)
                         field.onChange([...field.value, role]);
                       else
-                        field.onChange(
-                          field.value.filter((v: string) => v !== role)
-                        );
+                        field.onChange(field.value.filter((v) => v !== role));
                     }}
                   />
                 }
@@ -224,4 +221,4 @@ export const SurveyForm: React.FC<{
       </Button>
     </Box>
   );
-};
+}

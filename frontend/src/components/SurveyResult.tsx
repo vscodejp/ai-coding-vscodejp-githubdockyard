@@ -20,7 +20,7 @@ export const SurveyResult: React.FC<{ result: SurveyResultType }> = ({
       <Typography variant="h6" sx={{ mb: 2 }}>
         集計結果
       </Typography>
-      <Typography>総回答数: {result.total}</Typography>
+      <Typography>総回答数: {result.data.totalResponses}</Typography>
       <Typography variant="subtitle1" sx={{ mt: 2 }}>
         職種別集計
       </Typography>
@@ -33,10 +33,10 @@ export const SurveyResult: React.FC<{ result: SurveyResultType }> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.entries(result.jobRoleStats).map(([role, count]) => (
+            {Object.entries(result.data.jobRole).map(([role, count]) => (
               <TableRow key={role}>
                 <TableCell>{role}</TableCell>
-                <TableCell>{count}</TableCell>
+                <TableCell>{count as number}</TableCell>
               </TableRow>
             ))}
           </TableBody>
@@ -52,12 +52,14 @@ export const SurveyResult: React.FC<{ result: SurveyResultType }> = ({
             </TableRow>
           </TableHead>
           <TableBody>
-            {Object.entries(result.eventRatingStats).map(([rating, count]) => (
-              <TableRow key={rating}>
-                <TableCell>{rating}</TableCell>
-                <TableCell>{count}</TableCell>
-              </TableRow>
-            ))}
+            {Object.entries(result.data.eventRating.distribution).map(
+              ([rating, count]) => (
+                <TableRow key={rating}>
+                  <TableCell>{rating}</TableCell>
+                  <TableCell>{count as number}</TableCell>
+                </TableRow>
+              )
+            )}
           </TableBody>
         </Table>
       </TableContainer>
