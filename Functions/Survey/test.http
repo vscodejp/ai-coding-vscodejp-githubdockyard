@@ -1,0 +1,232 @@
+### Azure Functions Survey API テスト用 HTTP ファイル
+### REST Client 拡張機能で実行可能
+
+@baseUrl = http://localhost:7141/api
+@contentType = application/json
+
+###
+# ヘルスチェック
+GET {{baseUrl}}/surveys/health
+Accept: {{contentType}}
+
+###
+# アンケート登録 - 正常ケース (VS Code Meetup, フロントエンドエンジニア)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 5,
+  "feedback": "とても勉強になりました！GitHub Copilot Agentの機能が素晴らしかったです。"
+}
+
+###
+# アンケート登録 - 正常ケース (GitHub dockyard, バックエンドエンジニア)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["バックエンドエンジニア"],
+  "eventRating": 4,
+  "feedback": "Azure Functions の実装が面白かったです。"
+}
+
+###
+# アンケート登録 - 複数コミュニティ、複数職種
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
+  "jobRole": ["フルスタックエンジニア", "DevOpsエンジニア"],
+  "eventRating": 5,
+  "feedback": "両方のコミュニティの知見が得られて大変有益でした。"
+}
+
+###
+# 🐛 デバッグ用 - 最もシンプルなヘルスチェック (Cosmos DB 不要)
+GET {{baseUrl}}/surveys/health
+Accept: {{contentType}}
+
+###
+# 🐛 デバッグ用 - その他職種のテスト (最小限のデータ)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["その他"],
+  "jobRoleOther": "QAエンジニア",
+  "eventRating": 4,
+  "feedback": "テスト"
+}
+
+###
+# アンケート登録 - その他職種
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["その他"],
+  "jobRoleOther": "QAエンジニア",
+  "eventRating": 4,
+  "feedback": "テスト自動化の観点からとても参考になりました。"
+}
+
+###
+# アンケート登録 - どちらのコミュニティでもない
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["データエンジニア"],
+  "eventRating": 3,
+  "feedback": "AI/ML関連の内容がもう少しあると嬉しかったです。"
+}
+
+###
+# アンケート登録 - フィードバックなし
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["モバイルエンジニア"],
+  "eventRating": 4,
+  "feedback": ""
+}
+
+###
+# アンケート登録 - バリデーションエラー (職種が空)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": [],
+  "eventRating": 5,
+  "feedback": "職種が選択されていないテストケース"
+}
+
+###
+# アンケート登録 - バリデーションエラー (その他職種が未入力)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["その他"],
+  "eventRating": 4,
+  "feedback": "その他を選択したが詳細が未入力"
+}
+
+###
+# アンケート登録 - バリデーションエラー (評価が範囲外)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 6,
+  "feedback": "評価が範囲外のテストケース"
+}
+
+###
+# アンケート登録 - バリデーションエラー (無効なコミュニティ)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["無効なコミュニティ"],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 4,
+  "feedback": "無効なコミュニティのテストケース"
+}
+
+###
+# アンケート登録 - バリデーションエラー (フィードバックが長すぎる)
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 4,
+  "feedback": "このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。このフィードバックは1000文字を超える非常に長いテキストです。"
+}
+
+###
+# アンケート登録 - 不正な JSON
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup",
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 4
+
+###
+# アンケート集計結果取得
+GET {{baseUrl}}/surveys/results
+Accept: {{contentType}}
+
+### 
+# 大量データテスト用 - 複数のアンケート登録
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 5,
+  "feedback": "テストデータ1"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["バックエンドエンジニア"],
+  "eventRating": 4,
+  "feedback": "テストデータ2"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
+  "jobRole": ["フルスタックエンジニア"],
+  "eventRating": 3,
+  "feedback": "テストデータ3"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["DevOpsエンジニア"],
+  "eventRating": 2,
+  "feedback": "テストデータ4"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: {{contentType}}
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["データエンジニア", "モバイルエンジニア"],
+  "eventRating": 1,
+  "feedback": "テストデータ5"
+}
