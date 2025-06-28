@@ -1,35 +1,29 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import React, { useState } from "react";
+import { Home } from "./pages/Home";
+import { Results } from "./pages/Results";
+import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [page, setPage] = useState<"home" | "results">("home");
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.tsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <Container maxWidth="md">
+      <AppBar position="static" sx={{ mb: 4 }}>
+        <Toolbar>
+          <Typography variant="h6" sx={{ flexGrow: 1 }}>
+            アンケートアプリ
+          </Typography>
+          <Button color="inherit" onClick={() => setPage("home")}>
+            アンケート
+          </Button>
+          <Button color="inherit" onClick={() => setPage("results")}>
+            集計結果
+          </Button>
+        </Toolbar>
+      </AppBar>
+      {page === "home" ? <Home /> : <Results />}
+    </Container>
+  );
 }
 
-export default App
+export default App;
