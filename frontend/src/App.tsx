@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import { useState } from "react";
 import { Home } from "./pages/Home";
 import { Results } from "./pages/Results";
 import { Container, AppBar, Toolbar, Typography, Button } from "@mui/material";
