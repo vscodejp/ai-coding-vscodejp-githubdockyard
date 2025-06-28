@@ -12,6 +12,11 @@ dist
 dist-ssr
 *.local
 
+# 環境変数ファイル（安全のためgit管理外に）
+.env
+.env.*
+!.env.example
+
 # Editor directories and files
 .vscode/*
 !.vscode/extensions.json
