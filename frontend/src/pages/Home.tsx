@@ -37,12 +37,26 @@ export const Home: React.FC = () => {
   }
 
   return (
-    <Box sx={{ maxWidth: 600, mx: "auto", mt: 4 }}>
-      <Typography variant="h4" gutterBottom>
+    <Box
+      sx={{
+        width: "100%",
+        maxWidth: { xs: "100%", sm: 600, md: 800 },
+        mx: "auto",
+        mt: 4,
+        px: { xs: 1, sm: 2, md: 0 },
+        boxSizing: "border-box",
+        display: "flex",
+        flexDirection: "column",
+        alignItems: "center",
+      }}
+    >
+      <Typography variant="h4" gutterBottom align="center">
         アンケート
       </Typography>
       {error && <Alert severity="error">{error}</Alert>}
-      <SurveyForm onSubmit={handleSubmit} loading={loading} />
+      <Box sx={{ width: "100%" }}>
+        <SurveyForm onSubmit={handleSubmit} loading={loading} />
+      </Box>
     </Box>
   );
 };
