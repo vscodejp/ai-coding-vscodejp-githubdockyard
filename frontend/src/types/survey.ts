@@ -1,11 +1,22 @@
 // Survey型定義（API仕様準拠）
 
 export type Survey = {
-  communityAffiliation: string[]; // コミュニティ所属（空配列可）
-  jobRole: string[]; // 職種（1つ以上必須）
-  eventRating: number; // イベント評価（1-5）
-  jobRoleOther?: string; // 職種「その他」時の自由記述（100字以内）
-  feedback?: string; // フィードバック（1000字以内）
+  id?: string;
+  communityAffiliation: ("VS Code Meetup" | "GitHub dockyard")[];
+  jobRole: (
+    | "フロントエンドエンジニア"
+    | "バックエンドエンジニア"
+    | "フルスタックエンジニア"
+    | "DevOpsエンジニア"
+    | "データエンジニア"
+    | "モバイルエンジニア"
+    | "その他"
+  )[];
+  jobRoleOther?: string;
+  eventRating: 1 | 2 | 3 | 4 | 5;
+  feedback?: string;
+  createdAt?: Date;
+  updatedAt?: Date;
 };
 
 export type SurveyPostResponse = {
@@ -16,9 +27,21 @@ export type SurveyPostResponse = {
   code?: string;
 };
 
+// 集計APIのレスポンス構造に合わせて型を定義
 export type SurveyResult = {
-  total: number;
-  jobRoleStats: Record<string, number>;
-  eventRatingStats: Record<number, number>;
-  // 必要に応じて追加
+  success: boolean;
+  data: {
+    totalResponses: number;
+    communityAffiliation: Record<string, number>;
+    jobRole: Record<string, number>;
+    eventRating: {
+      average: number;
+      distribution: Record<string, number>;
+    };
+    feedback: Array<{
+      id: string;
+      feedback: string;
+      timestamp: string;
+    }>;
+  };
 };

@@ -17,18 +17,48 @@ import {
 import type { Survey } from "../types/survey";
 
 // Zodスキーマ
+
+const communityAffiliationOptions = ["VS Code Meetup", "GitHub dockyard"];
+const jobRoleOptions = [
+  "フロントエンドエンジニア",
+  "バックエンドエンジニア",
+  "フルスタックエンジニア",
+  "DevOpsエンジニア",
+  "データエンジニア",
+  "モバイルエンジニア",
+  "その他",
+];
+
 const schema = z.object({
-  communityAffiliation: z.array(z.string()),
-  jobRole: z.array(z.string()).min(1, "1つ以上選択してください"),
-  eventRating: z.number().min(1).max(5),
+  communityAffiliation: z
+    .array(z.enum(["VS Code Meetup", "GitHub dockyard"]))
+    .optional()
+    .default([]),
+  jobRole: z
+    .array(
+      z.enum([
+        "フロントエンドエンジニア",
+        "バックエンドエンジニア",
+        "フルスタックエンジニア",
+        "DevOpsエンジニア",
+        "データエンジニア",
+        "モバイルエンジニア",
+        "その他",
+      ])
+    )
+    .min(1, "1つ以上選択してください"),
+  eventRating: z.union([
+    z.literal(1),
+    z.literal(2),
+    z.literal(3),
+    z.literal(4),
+    z.literal(5),
+  ]),
   jobRoleOther: z.string().max(100).optional(),
   feedback: z.string().max(1000).optional(),
 });
 
 type FormValues = z.infer<typeof schema>;
-
-const jobRoles = ["エンジニア", "デザイナー", "PM", "その他"];
-const communities = ["コミュニティA", "コミュニティB", "コミュニティC"];
 
 export const SurveyForm: React.FC<{
   onSubmit: (data: Survey) => void;
@@ -56,7 +86,7 @@ export const SurveyForm: React.FC<{
     <Box component="form" onSubmit={handleSubmit(onSubmit)}>
       <FormLabel>コミュニティ所属（複数選択可）</FormLabel>
       <FormGroup row>
-        {communities.map((c) => (
+        {communityAffiliationOptions.map((c) => (
           <Controller
             key={c}
             name="communityAffiliation"
@@ -65,12 +95,13 @@ export const SurveyForm: React.FC<{
               <FormControlLabel
                 control={
                   <Checkbox
-                    checked={field.value.includes(c)}
+                    checked={field.value?.includes(c) ?? false}
                     onChange={(e) => {
-                      if (e.target.checked) field.onChange([...field.value, c]);
+                      if (e.target.checked)
+                        field.onChange([...(field.value || []), c]);
                       else
                         field.onChange(
-                          field.value.filter((v: string) => v !== c)
+                          (field.value || []).filter((v: string) => v !== c)
                         );
                     }}
                   />
@@ -89,7 +120,7 @@ export const SurveyForm: React.FC<{
 
       <FormLabel sx={{ mt: 2 }}>職種（1つ以上必須）</FormLabel>
       <FormGroup row>
-        {jobRoles.map((role) => (
+        {jobRoleOptions.map((role) => (
           <Controller
             key={role}
             name="jobRole"
