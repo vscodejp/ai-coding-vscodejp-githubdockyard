@@ -1,0 +1,68 @@
+# 共通
+.DS_Store
+Thumbs.db
+node_modules/
+dist/
+build/
+.env
+.env.*
+*.log
+*.tmp
+*.swp
+
+# フロントエンド
+/frontend/node_modules/
+/frontend/dist/
+/frontend/build/
+/frontend/.env
+/frontend/.env.*
+/frontend/.next/
+/frontend/.turbo/
+/frontend/.vercel/
+/frontend/.cache/
+/frontend/coverage/
+
+# バックエンド
+/Functions/Survey/bin/
+/Functions/Survey/obj/
+/Functions/Survey/publish/
+/Functions/Survey/.vs/
+/Functions/Survey/.vscode/
+/Functions/Survey/*.user
+/Functions/Survey/*.suo
+/Functions/Survey/*.userosscache
+/Functions/Survey/*.sln.docstates
+/Functions/Survey/.env
+/Functions/Survey/.env.*
+/Functions/Survey/local.settings.json
+
+# VSCode
+.vscode/
+.history/
+
+# OS/エディタ
+*.swp
+*.swo
+*.bak
+*.tmp
+~$*
+
+# その他
+*.log
+*.lock
+*.zip
+*.7z
+*.tar.gz
+*.tgz
+*.rar
+*.bak
+*.old
+*.orig
+*.rej
+*.patch
+*.pid
+*.seed
+*.pid.lock
+*.coverage
+*.nyc_output/
+*.eslintcache
