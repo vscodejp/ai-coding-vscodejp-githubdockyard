@@ -1,0 +1,127 @@
+### Azure Functions アンケートAPI テストファイル
+### ローカル開発環境用: http://localhost:7071
+
+@baseUrl = http://localhost:7172/api
+
+### ヘルスチェック
+GET {{baseUrl}}/health
+
+###
+
+### 1. 最小限の成功パターン（どちらのコミュニティにも所属しない場合）
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 5,
+  "feedback": "とても良いイベントでした！"
+}
+
+###
+
+### 2. 完全なデータの成功パターン
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
+  "jobRole": ["フロントエンドエンジニア", "バックエンドエンジニア"],
+  "eventRating": 4,
+  "feedback": "Azure Functionsとreactの組み合わせがとても参考になりました。次回も参加したいです！"
+}
+
+###
+
+### 3. 「その他」職種の成功パターン
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["その他"],
+  "jobRoleOther": "プロダクトマネージャー",
+  "eventRating": 5,
+  "feedback": "技術的な内容も理解しやすく説明されていて良かったです"
+}
+
+###
+
+### 4. エラーパターン: 必須フィールド不足
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "eventRating": 3
+}
+
+###
+
+### 5. エラーパターン: 無効な職種
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["無効な職種"],
+  "eventRating": 3
+}
+
+###
+
+### 6. エラーパターン: 評価値が範囲外
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 6
+}
+
+###
+
+### 7. エラーパターン: 「その他」選択時にjobRoleOtherが未入力
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["その他"],
+  "eventRating": 4
+}
+
+###
+
+### 8. エラーパターン: 文字数制限オーバー
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["その他"],
+  "jobRoleOther": "これは100文字を超える非常に長い職種名です。これは100文字を超える非常に長い職種名です。これは100文字を超える非常に長い職種名です。これは100文字を超える",
+  "eventRating": 4
+}
+
+###
+
+### 9. エラーパターン: 空のJSON
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{}
+
+###
+
+### 10. エラーパターン: 無効なJSON
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"
+  "jobRole": ["フロントエンドエンジニア"],
+  "eventRating": 4
+}
