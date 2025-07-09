@@ -1,0 +1,116 @@
+### Azure Functions アンケートAPI テスト
+
+@baseUrl = http://localhost:7142/api
+
+### 1. アンケート登録 - 正常ケース
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
+  "jobRole": ["フロントエンドエンジニア", "バックエンドエンジニア"],
+  "jobRoleOther": "",
+  "eventRating": 5,
+  "feedback": "とても素晴らしいイベントでした！Azure Functionsの実装方法がよく理解できました。"
+}
+
+### 2. アンケート登録 - その他職種あり
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["その他"],
+  "jobRoleOther": "プロダクトマネージャー",
+  "eventRating": 4,
+  "feedback": "プロダクト視点からも参考になる内容でした。"
+}
+
+### 3. アンケート登録 - 最小限のデータ
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": [],
+  "jobRole": ["データエンジニア"],
+  "eventRating": 3
+}
+
+### 4. アンケート登録 - バリデーションエラー（職種未選択）
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": [],
+  "eventRating": 5,
+  "feedback": "これはエラーになるはずです"
+}
+
+### 5. アンケート登録 - バリデーションエラー（その他職種の詳細なし）
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["その他"],
+  "jobRoleOther": "",
+  "eventRating": 4
+}
+
+### 6. アンケート登録 - バリデーションエラー（評価範囲外）
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フルスタックエンジニア"],
+  "eventRating": 6,
+  "feedback": "評価が範囲外です"
+}
+
+### 7. アンケート登録 - 無効なJSON
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["フロントエンドエンジニア"
+  // 不正なJSON
+}
+
+### 8. 集計結果取得
+GET {{baseUrl}}/surveys/results
+
+### 9. 複数のテストデータ投入
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup"],
+  "jobRole": ["DevOpsエンジニア"],
+  "eventRating": 5,
+  "feedback": "CI/CDの話が特に参考になりました。"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["GitHub dockyard"],
+  "jobRole": ["モバイルエンジニア"],
+  "eventRating": 4,
+  "feedback": "モバイル開発でもAzure Functionsが使えそうです。"
+}
+
+###
+POST {{baseUrl}}/surveys
+Content-Type: application/json
+
+{
+  "communityAffiliation": ["VS Code Meetup", "GitHub dockyard"],
+  "jobRole": ["フルスタックエンジニア"],
+  "eventRating": 5,
+  "feedback": "両コミュニティの合同イベントならではの内容でした！"
+}
