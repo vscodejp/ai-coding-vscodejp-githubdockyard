@@ -21,7 +21,7 @@ public class SurveyFunctions
 
     [Function("CreateSurvey")]
     public async Task<IActionResult> CreateSurvey(
-        [HttpTrigger(AuthorizationLevel.Function, "post", Route = "surveys")] HttpRequest req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "post", Route = "surveys")] HttpRequest req)
     {
         _logger.LogInformation("アンケート登録APIが呼ばれました");
 
@@ -101,7 +101,7 @@ public class SurveyFunctions
 
     [Function("GetSurveyResults")]
     public async Task<IActionResult> GetSurveyResults(
-        [HttpTrigger(AuthorizationLevel.Function, "get", Route = "surveys/results")] HttpRequest req)
+        [HttpTrigger(AuthorizationLevel.Anonymous, "get", Route = "surveys/results")] HttpRequest req)
     {
         _logger.LogInformation("集計結果取得APIが呼ばれました");
 
